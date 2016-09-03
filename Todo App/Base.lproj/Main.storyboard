@@ -40,17 +40,24 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMa-2F-4wy">
-                                <rect key="frame" x="120" y="306" width="80" height="30"/>
+                                <rect key="frame" x="120" y="350" width="80" height="30"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="onLoginTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hWz-Od-4yv"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I7X-nm-gqU">
+                                <rect key="frame" x="0.0" y="292" width="320" height="21"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="errorPanel" destination="I7X-nm-gqU" id="z1G-q9-Q54"/>
                         <outlet property="passwordField" destination="Foh-B1-3WQ" id="TR4-nH-X9g"/>
                         <outlet property="usernameField" destination="66g-CB-zgj" id="6bb-CP-gnh"/>
                     </connections>

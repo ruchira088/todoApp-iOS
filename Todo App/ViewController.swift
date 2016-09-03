@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var passwordField: UITextField!
     
+    @IBOutlet weak var errorPanel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -22,6 +24,25 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func covertToDictionary(data: NSData?) -> [String: Any] {
+        do
+        {
+            return try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! [String: String]
+        }
+        catch
+        {
+            return [String: Any]()
+        }
+    }
+    
+    func isSuccessful(response: NSURLResponse?) -> Bool
+    {
+        let httpResponse = response! as! NSHTTPURLResponse
+        let statusCode = httpResponse.statusCode
+        
+        return (statusCode < 300 && statusCode >= 200)
     }
 
     @IBAction func onLoginTouchUp(sender: UIButton)
@@ -43,17 +64,34 @@ class ViewController: UIViewController {
 
             let requestTask = NSURLSession.sharedSession().dataTaskWithRequest(request){data, response, error in
                 
-                if error != nil {
-                    print(error)
+                if error != nil
+                {
+                    self.errorPanel.text = "Unable to connect to the server."
                     return
                 }
                 
-                do {
-                    let responseData = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! [String:String]
-                    print(responseData["token"]!)
-                }
-                catch
+                if self.isSuccessful(response)
                 {
+                    do {
+                        let responseData = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! [String:String]
+                        print(responseData["token"]!)
+                        
+                        return
+                    }
+                    catch
+                    {
+                        
+                    }
+                    
+                }
+                else
+                {
+                    print("Invalid credentials")
+                    dispatch_async(dispatch_get_main_queue())
+                    {
+                        self.errorPanel.text = "Invalid credentials"
+                    }
+                    
                     
                 }
             }
